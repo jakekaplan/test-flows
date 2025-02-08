@@ -18,7 +18,8 @@ pull:
     repository: https://github.com/jakekaplan/test-flows.git
     branch: main
 - prefect.deployments.steps.run_shell_script:
-    script: uv pip install .
+    script: |
+      /bin/sh -c "PYTHONPATH=$PYTHONPATH:src uv pip install ."
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
