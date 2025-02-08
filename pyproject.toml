@@ -1,0 +1,19 @@
+[project]
+name = "test-flows"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "jake@prefect.io", email = "jake@prefect.io" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "prefect>=3.1.15",
+]
+
+[project.scripts]
+test-flows = "test_flows:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
