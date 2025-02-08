@@ -1,0 +1,41 @@
+# Welcome to your prefect.yaml file! You can use this file for storing and managing
+# configuration for deploying your flows. We recommend committing this file to source
+# control along with your flow code.
+
+# Generic metadata about this project
+name: test-flows
+prefect-version: 3.1.15
+
+# build section allows you to manage and build docker images
+build: null
+
+# push section allows you to manage if and how this project is uploaded to remote locations
+push: null
+
+# pull section allows you to provide instructions for cloning this project in remote locations
+pull:
+- prefect.deployments.steps.git_clone:
+    repository: https://github.com/jakekaplan/test-flows.git
+    branch: main
+- prefect.deployments.steps.run_shell_script:
+    script: |
+      export PYTHONPATH=$PYTHONPATH:src
+      uv pip install .
+
+- prefect.deployments.steps.run_shell_script:
+    script:
+
+# the deployments section allows you to provide configuration for deploying flows
+deployments:
+- name: test-flows-deploy
+  version: null
+  tags: []
+  concurrency_limit: null
+  description: null
+  entrypoint: src/test_flows/my_flow.py:my_flow
+  parameters: {}
+  work_pool:
+    name: my-process-pool
+    work_queue_name: null
+    job_variables: {}
+  schedules: []
