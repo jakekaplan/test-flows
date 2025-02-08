@@ -18,12 +18,7 @@ pull:
     repository: https://github.com/jakekaplan/test-flows.git
     branch: main
 - prefect.deployments.steps.run_shell_script:
-    script: |
-      export PYTHONPATH=$PYTHONPATH:src
-      uv pip install .
-
-- prefect.deployments.steps.run_shell_script:
-    script:
+    script: uv pip install .
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
@@ -32,7 +27,7 @@ deployments:
   tags: []
   concurrency_limit: null
   description: null
-  entrypoint: src/test_flows/my_flow.py:my_flow
+  entrypoint: "test_flows.my_flow:my_flow"
   parameters: {}
   work_pool:
     name: my-process-pool
