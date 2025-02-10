@@ -22,14 +22,7 @@ pull:
     script: pip install uv
 - prefect.deployments.steps.run_shell_script:
     directory: '{{ clone-step.directory }}'
-    script: uv sync --python-preference only-system --no-editable
-- prefect.deployments.steps.run_shell_script:
-    script: python -c "import test_flows; import inspect; print(inspect.getfile(test_flows));
-      print(dir(test_flows));"
-- prefect.deployments.steps.run_shell_script:
-    script: pip freeze
-- prefect.deployments.steps.run_shell_script:
-    script: ls
+    script: uv sync
 
 deployments:
 - name: test-flows2-deploy
@@ -37,10 +30,10 @@ deployments:
   tags: []
   concurrency_limit:
   description:
-  entrypoint: test_flows.my_flow.py:my_flow
+  entrypoint: test_flows.my_flow:my_flow
   parameters: {}
   work_pool:
     name: my-modal-pool
     work_queue_name:
-    job_variables: {}
+    job_variables: {"env": {"UV_PROJECT_ENVIRONMENT": "/usr/local"}}
   schedules: []
