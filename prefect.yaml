@@ -19,7 +19,7 @@ pull:
     branch: main
 - prefect.deployments.steps.run_shell_script:
     directory: '{{ clone-step.directory }}'
-    script: uv pip install .
+    script: pwd
 - prefect.deployments.steps.run_shell_script:
     script: uv pip freeze
 
