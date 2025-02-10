@@ -15,13 +15,12 @@ push: null
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
 - prefect.deployments.steps.git_clone:
+    id: clone-step
     repository: https://github.com/jakekaplan/test-flows.git
     branch: main
 - prefect.deployments.steps.run_shell_script:
     directory: '{{ clone-step.directory }}'
-    script: pwd
-- prefect.deployments.steps.run_shell_script:
-    script: uv pip freeze
+    script: uv pip install .
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
