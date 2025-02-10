@@ -27,7 +27,7 @@ deployments:
   tags: []
   concurrency_limit: null
   description: null
-  entrypoint: src.test_flows.my_flow:my_flow
+  entrypoint: test_flows.my_flow:my_flow
   parameters: {}
   work_pool:
     name: my-process-pool
