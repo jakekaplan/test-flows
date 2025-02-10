@@ -19,8 +19,16 @@ pull:
     repository: https://github.com/jakekaplan/test-flows.git
     branch: main
 - prefect.deployments.steps.run_shell_script:
+    script: pip install uv
+- prefect.deployments.steps.run_shell_script:
     directory: '{{ clone-step.directory }}'
-    script: uv pip install .
+    script: uv sync --python-preference only-system --no-editable
+- prefect.deployments.steps.run_shell_script:
+    script: python -c "import test_flows; import inspect; print(inspect.getfile(test_flows)); print(dir(test_flows));"
+- prefect.deployments.steps.run_shell_script:
+    script: pip freeze
+- prefect.deployments.steps.run_shell_script:
+    script: ls
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
@@ -32,7 +40,7 @@ deployments:
   entrypoint: test_flows.my_flow:my_flow
   parameters: {}
   work_pool:
-    name: my-process-pool
+    name: my-modal-pool
     work_queue_name: null
-    job_variables: {}
+    job_variables: {"env": {"UV_PROJECT_ENVIRONMENT": "/usr/local"}}
   schedules: []
