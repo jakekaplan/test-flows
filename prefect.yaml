@@ -7,10 +7,10 @@ name: test-flows
 prefect-version: 3.1.15
 
 # build section allows you to manage and build docker images
-build: null
+build:
 
 # push section allows you to manage if and how this project is uploaded to remote locations
-push: null
+push:
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
@@ -24,23 +24,23 @@ pull:
     directory: '{{ clone-step.directory }}'
     script: uv sync --python-preference only-system --no-editable
 - prefect.deployments.steps.run_shell_script:
-    script: python -c "import test_flows; import inspect; print(inspect.getfile(test_flows)); print(dir(test_flows));"
+    script: python -c "import test_flows; import inspect; print(inspect.getfile(test_flows));
+      print(dir(test_flows));"
 - prefect.deployments.steps.run_shell_script:
     script: pip freeze
 - prefect.deployments.steps.run_shell_script:
     script: ls
 
-# the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: test-flows-deploy
-  version: null
+- name: test-flows2-deploy
+  version:
   tags: []
-  concurrency_limit: null
-  description: null
-  entrypoint: test_flows.my_flow:my_flow
+  concurrency_limit:
+  description:
+  entrypoint: test_flows.my_flow.py:my_flow
   parameters: {}
   work_pool:
     name: my-modal-pool
-    work_queue_name: null
-    job_variables: {"env": {"UV_PROJECT_ENVIRONMENT": "/usr/local"}}
+    work_queue_name:
+    job_variables: {}
   schedules: []
